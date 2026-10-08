@@ -8,8 +8,6 @@ if (!isset($_composer_autoload_path)) {
     exit(1);
 }
 
-echo "Running NPM package installer..." . PHP_EOL;
-
 $projectRoot = getcwd();
 
 $commands = [
@@ -37,20 +35,26 @@ foreach ($commands as $command) {
     }
 }
 
-echo "NPM packages installed" . PHP_EOL;
-echo "======" . PHP_EOL;
-echo "Copying style helpers..." . PHP_EOL;
-
 $packageDirectory = dirname(__DIR__);
 $stylesFolder = $packageDirectory . '/resources/styles';
+$scriptsFolder = $packageDirectory . '/resources/scripts';
 
 $projectRoot = dirname($_composer_autoload_path);
-$destinationFolder = $projectRoot . '/../resources/css/';
+$stylesDestinationFolder = $projectRoot . '/../resources/css/';
+$scriptsDestinationFolder = $projectRoot . '/../resources/js/';
+
+if (!is_dir($stylesDestinationFolder . 'utils')) {
+    mkdir($stylesDestinationFolder . 'utils');
+}
+
+if (!is_dir($scriptsDestinationFolder . 'utils')) {
+    mkdir($scriptsDestinationFolder . 'utils');
+}
 
 foreach (new DirectoryIterator($stylesFolder) as $file) {
     if ($file->isFile()) {
         $sourceFile = $stylesFolder . '/' . $file->getFilename();
-        $destinationFile = $destinationFolder . 'utils/' . $file->getFilename();
+        $destinationFile = $stylesDestinationFolder . 'utils/' . $file->getFilename();
 
         if (!copy($sourceFile, $destinationFile)) {
             fwrite(STDERR, "Unable to copy: {$file->getFilename()}\n");
@@ -59,4 +63,16 @@ foreach (new DirectoryIterator($stylesFolder) as $file) {
     }
 }
 
-echo "Style helpers copied" . PHP_EOL;
+foreach (new DirectoryIterator($scriptsFolder) as $file) {
+    if ($file->isFile()) {
+        $sourceFile = $scriptsFolder . '/' . $file->getFilename();
+        $destinationFile = $scriptsDestinationFolder . 'utils/' . $file->getFilename();
+
+        if (!copy($sourceFile, $destinationFile)) {
+            fwrite(STDERR, "Unable to copy: {$file->getFilename()}\n");
+            exit(1);
+        }
+    }
+}
+
+echo "Resources installation complete" . PHP_EOL;
