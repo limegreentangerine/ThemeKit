@@ -8,6 +8,8 @@ if (!isset($_composer_autoload_path)) {
     exit(1);
 }
 
+echo "Running NPM package installer..." . PHP_EOL;
+
 $projectRoot = getcwd();
 
 $commands = [
@@ -35,4 +37,26 @@ foreach ($commands as $command) {
     }
 }
 
-echo "Packages installed, try running `npm run dev`" . PHP_EOL;
+echo "NPM packages installed" . PHP_EOL;
+echo "======" . PHP_EOL;
+echo "Copying style helpers..." . PHP_EOL;
+
+$packageDirectory = dirname(__DIR__);
+$stylesFolder = $packageDirectory . '/resources/styles';
+
+$projectRoot = dirname($_composer_autoload_path);
+$destinationFolder = $projectRoot . '/../resources/css/';
+
+foreach (new DirectoryIterator($stylesFolder) as $file) {
+    if ($file->isFile()) {
+        $sourceFile = $stylesFolder . '/' . $file->getFilename();
+        $destinationFile = $destinationFolder . 'utils/' . $file->getFilename();
+
+        if (!copy($sourceFile, $destinationFile)) {
+            fwrite(STDERR, "Unable to copy: {$file->getFilename()}\n");
+            exit(1);
+        }
+    }
+}
+
+echo "Style helpers copied" . PHP_EOL;
