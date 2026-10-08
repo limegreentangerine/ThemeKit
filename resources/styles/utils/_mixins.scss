@@ -1,0 +1,57 @@
+@import "bootstrap/scss/mixins/breakpoints";
+
+@mixin image-placeholder(
+    $containerPosition: relative,
+    $zindex: 0,
+    $backgroundColor: $gray-800,
+    $blendMode: luminosity,
+    $size: 35%,
+    $image
+) {
+    position: $containerPosition;
+
+    &:after {
+        content: '';
+        position: absolute;
+        z-index: $zindex;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: $backgroundColor;
+        background-image: url($image);
+        background-position: center;
+        background-size: $size;
+        background-repeat: no-repeat;
+        background-blend-mode: $blendMode;
+    }
+}
+
+@mixin object-fit(
+    $zindex: 0,
+    $containerClass: '--container',
+    $widthAspect: 1,
+    $heightAspect: 1,
+    $containerPosition: relative,
+    $fit: cover,
+    $position: center,
+    $width: 100%,
+    $height: 100%
+) {
+    position: absolute;
+    z-index: $zindex;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: $width;
+    height: $height;
+    object-fit: $fit;
+    object-position: $position;
+
+    &#{$containerClass} {
+        position: $containerPosition;
+        aspect-ratio: $widthAspect / $heightAspect;
+        overflow: hidden;
+    }
+}
