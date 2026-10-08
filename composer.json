@@ -49,9 +49,7 @@
 			"@format:js:check"
 		],
 		"post-install-cmd": [
-			"npm install",
-			"npm install --save-dev vite typescript sass @types/node @types/bootstrap",
-			"npm install --save bootstrap @popperjs/core"
+			"npm install"
 		]
 	},
 	"bin": [
