@@ -1,7 +1,7 @@
 {
 	"name": "limegreentangerine/theme_kit",
 	"description": "Theme building tools.",
-	"type": "concrete5-package",
+	"type": "library",
 	"license": "proprietary",
 	"minimum-stability": "stable",
 	"autoload": {
@@ -14,10 +14,12 @@
 			"ThemeKit\\Tests\\": "tests/"
 		}
 	},
-	"authors": [],
-	"require": {
-		"limegreentangerine/class_kit": "^1.0"
-	},
+	"authors": [
+		{
+			"name": "Lee Jones",
+			"email": "mail@leejones.me.uk"
+		}
+	],
 	"require-dev": {
 		"php": "^8.4",
 		"phpunit/phpunit": "^11",
@@ -48,19 +50,11 @@
 		],
 		"post-install-cmd": [
 			"npm install",
-			"npm i --save-dev webpack webpack-cli autoprefixer css-loader postcss-loader sass sass-loader style-loader typescript ts-loader @types/node",
-			"npm i --save bootstrap @popperjs/core",
-			"mkdir -p src src/js src/scss",
-			"touch src/js/main.ts src/scss/styles.scss"
+			"npm install --save-dev vite typescript sass @types/node @types/bootstrap",
+			"npm install --save bootstrap @popperjs/core"
 		]
 	},
 	"bin": [
 		"bin/install-themekit-resources"
-	],
-	"repositories": [
-		{
-			"type": "composer",
-			"url": "https://packages.limegreentangerine.net"
-		}
 	]
 }

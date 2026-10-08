@@ -8,27 +8,29 @@ if (!isset($_composer_autoload_path)) {
     exit(1);
 }
 
-$packageDirectory = dirname(__DIR__);
-$resourcesFolder = $packageDirectory . '/resources';
+$projectRoot = getcwd();
 
-$projectRoot = dirname($_composer_autoload_path);
-$destination = $projectRoot . '/../public/';
+$commands = [
+    ['npm', 'install'],
+    ['npm', 'install', '--save-dev', 'vite', 'sass', 'typescript', '@types/node', '@types/bootstrap'],
+    ['npm', 'install', '--save', 'bootstrap', '@popperjs/core'],
+    ['npm', 'run', 'dev']
+];
 
-foreach (new DirectoryIterator($resourcesFolder) as $file) {
-    if ($file->isFile()) {
-        echo $file->getPathname() . PHP_EOL;
+foreach ($commands as $command) {
+    $process = proc_open(
+        $command,
+        [0 => STDIN, 1 => STDOUT, 2 => STDERR],
+        $pipes,
+        $projectRoot
+    );
+
+    if (!is_resource($process)) {
+        throw new RuntimeException('Unable to start npm.');
+    }
+
+    $exitCode = proc_close($process);
+    if ($exitCode !== 0) {
+        exit($exitCode);
     }
 }
-
-// if (!is_file($source)) {
-//     fwrite(STDERR, "Source file does not exist: {$source}\n");
-//     exit(1);
-// }
-
-// if (!copy($source, $destination)) {
-//     fwrite(STDERR, "Unable to copy: {$source}\n");
-//     exit(1);
-// }
-
-// echo "Copied: " . basename($source) . " to " . $destination . PHP_EOL;
-// echo "Deploy script copied to root.\n";

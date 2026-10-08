@@ -4,56 +4,8 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a43feae7d26687effe2d4220ba18f312",
-    "packages": [
-        {
-            "name": "limegreentangerine/class_kit",
-            "version": "1.0.4",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/limegreentangerine/ClassKit.git",
-                "reference": "d3316cb3862016445a3525a21081133addbcfd62"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/limegreentangerine/ClassKit/zipball/d3316cb3862016445a3525a21081133addbcfd62",
-                "reference": "d3316cb3862016445a3525a21081133addbcfd62",
-                "shasum": ""
-            },
-            "require-dev": {
-                "concrete5/core": "^9.2",
-                "friendsofphp/php-cs-fixer": "^3.95",
-                "php": "^8.4",
-                "phpunit/phpunit": "^11"
-            },
-            "type": "concrete5-package",
-            "autoload": {
-                "psr-4": {
-                    "ClassKit\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Lee Jones",
-                    "email": "prolific.jones82@gmail.com"
-                },
-                {
-                    "name": "David Hendy",
-                    "email": "david@limegreentangerine.co.uk"
-                }
-            ],
-            "description": "Collection of helper classes for LGT packages.",
-            "support": {
-                "issues": "https://github.com/limegreentangerine/ClassKit/issues",
-                "source": "https://github.com/limegreentangerine/ClassKit/tree/1.0.4"
-            },
-            "time": "2026-09-24T12:59:13+00:00"
-        }
-    ],
+    "content-hash": "acda6ef379748af3f2461876293eea89",
+    "packages": [],
     "packages-dev": [
         {
             "name": "carbonphp/carbon-doctrine-types",
