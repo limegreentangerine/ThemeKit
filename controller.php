@@ -1,6 +1,6 @@
 <?php
 
-namespace Concrete\Package\ComposerPackage;
+namespace Concrete\Package\ThemeKit;
 
 use Concrete\Core\Package\Package;
 
@@ -13,7 +13,7 @@ class Controller extends Package
      *
      * @var string
      */
-    protected $pkgHandle = 'composer_package';
+    protected $pkgHandle = 'theme_kit';
 
     /**
      * The packages version.
@@ -83,7 +83,7 @@ class Controller extends Package
      * @var array
      */
     protected $pkgAutoloaderRegistries = [
-        'src' => '\ComposerPackage',
+        'src' => '\ThemeKit',
     ];
 
     /**
@@ -97,11 +97,11 @@ class Controller extends Package
 
     public function getPackageName()
     {
-        return t('composer_name');
+        return t('Theme Kit');
     }
 
     public function getPackageDescription()
     {
-        return t('composer_description');
+        return t('Theme building tools.');
     }
 }

@@ -7,7 +7,7 @@
     colors="true"
 >
     <testsuites>
-        <testsuite name="composer_name">
+        <testsuite name="Theme Kit">
             <directory>tests</directory>
         </testsuite>
     </testsuites>

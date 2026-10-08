@@ -1,5 +1,5 @@
 {
-	"name": "composer_package",
+	"name": "theme_kit",
 	"version": "1.0.0",
 	"description": "",
 	"main": "index.js",
@@ -11,17 +11,34 @@
 	},
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/limegreentangerine/composer_package.git"
+		"url": "git+https://github.com/limegreentangerine/theme_kit.git"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
 	"type": "commonjs",
 	"bugs": {
-		"url": "https://github.com/limegreentangerine/composer_package/issues"
+		"url": "https://github.com/limegreentangerine/theme_kit/issues"
 	},
-	"homepage": "https://github.com/limegreentangerine/composer_package#readme",
+	"homepage": "https://github.com/limegreentangerine/theme_kit#readme",
 	"devDependencies": {
-		"prettier": "^3.9.6"
+		"@types/node": "^26.6.4",
+		"autoprefixer": "^10.6.1",
+		"css-loader": "^7.1.5",
+		"html-webpack-plugin": "^5.6.8",
+		"postcss-loader": "^8.2.1",
+		"prettier": "^3.9.6",
+		"sass": "^1.105.1",
+		"sass-loader": "^17.0.1",
+		"style-loader": "^4.0.0",
+		"ts-loader": "^9.6.2",
+		"typescript": "^7.0.2",
+		"webpack": "^5.111.1",
+		"webpack-cli": "^7.2.3",
+		"webpack-dev-server": "^6.0.0"
+	},
+	"dependencies": {
+		"@popperjs/core": "^2.11.8",
+		"bootstrap": "^5.3.8"
 	}
 }

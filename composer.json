@@ -1,17 +1,17 @@
 {
-	"name": "limegreentangerine/composer_package",
-	"description": "composer_description",
+	"name": "limegreentangerine/theme_kit",
+	"description": "Theme building tools.",
 	"type": "concrete5-package",
 	"license": "proprietary",
 	"minimum-stability": "stable",
 	"autoload": {
 		"psr-4": {
-			"ComposerPackage\\": "src/"
+			"ThemeKit\\": "src/"
 		}
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"ComposerPackage\\Tests\\": "tests/"
+			"ThemeKit\\Tests\\": "tests/"
 		}
 	},
 	"authors": [],
@@ -47,9 +47,16 @@
 			"@format:js:check"
 		],
 		"post-install-cmd": [
-			"npm install"
+			"npm install",
+			"npm i --save-dev webpack webpack-cli autoprefixer css-loader postcss-loader sass sass-loader style-loader typescript ts-loader @types/node",
+			"npm i --save bootstrap @popperjs/core",
+			"mkdir -p src src/js src/scss",
+			"touch src/js/main.ts src/scss/styles.scss"
 		]
 	},
+	"bin": [
+		"bin/install-themekit-resources"
+	],
 	"repositories": [
 		{
 			"type": "composer",

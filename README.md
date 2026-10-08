@@ -1,16 +1,16 @@
 # Composer Package Template
 
-[![Code Standards](https://github.com/limegreentangerine/composer_package/actions/workflows/CodeStandards.yml/badge.svg)](https://github.com/limegreentangerine/composer_package/actions/workflows/CodeStandards.yml)
-[![System Tests](https://github.com/limegreentangerine/composer_package/actions/workflows/SystemTests.yml/badge.svg)](https://github.com/limegreentangerine/composer_package/actions/workflows/SystemTests.yml)
+[![Code Standards](https://github.com/limegreentangerine/theme_kit/actions/workflows/CodeStandards.yml/badge.svg)](https://github.com/limegreentangerine/theme_kit/actions/workflows/CodeStandards.yml)
+[![System Tests](https://github.com/limegreentangerine/theme_kit/actions/workflows/SystemTests.yml/badge.svg)](https://github.com/limegreentangerine/theme_kit/actions/workflows/SystemTests.yml)
 
 Use this repository as a starting point for a Concrete CMS package. Before using
 the template, update the package metadata and replace these identifiers
 throughout the project (use case-sensitive search):
 
-- `composer_package` -> package handle and PHP namespace prefix.
-- `composer_description` -> package description in `composer.json`.
-- `ComposerPackage` -> PHP namespace in the Composer autoload configuration.
-- `composer_name` -> package display name, where used.
+- `theme_kit` -> package handle and PHP namespace prefix.
+- `Theme building tools.` -> package description in `composer.json`.
+- `ThemeKit` -> PHP namespace in the Composer autoload configuration.
+- `Theme Kit` -> package display name, where used.
 
 Add contributor details to the `authors` section of `composer.json`.
 
@@ -45,15 +45,15 @@ Keep these credentials private; do not commit them to the repository.
 
 Run these commands from the repository root:
 
-| Command | Purpose |
-| --- | --- |
-| `composer test` | Run PHPUnit tests. |
-| `composer test-coverage` | Run PHPUnit and print a coverage report. |
-| `composer typecheck` | Run PHPStan using `phpstan.neon`. Findings are displayed, but the command exits successfully even when PHPStan reports errors. |
-| `composer format:check` | Check PHP and JavaScript formatting. |
-| `composer format` | Format PHP and JavaScript files. |
-| `composer format:php:check` / `composer format:php` | Check or format PHP files with PHP-CS-Fixer. |
-| `composer format:js:check` / `composer format:js` | Check or format files with Prettier. |
+| Command                                             | Purpose                                                                                                                        |
+| --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `composer test`                                     | Run PHPUnit tests.                                                                                                             |
+| `composer test-coverage`                            | Run PHPUnit and print a coverage report.                                                                                       |
+| `composer typecheck`                                | Run PHPStan using `phpstan.neon`. Findings are displayed, but the command exits successfully even when PHPStan reports errors. |
+| `composer format:check`                             | Check PHP and JavaScript formatting.                                                                                           |
+| `composer format`                                   | Format PHP and JavaScript files.                                                                                               |
+| `composer format:php:check` / `composer format:php` | Check or format PHP files with PHP-CS-Fixer.                                                                                   |
+| `composer format:js:check` / `composer format:js`   | Check or format files with Prettier.                                                                                           |
 
 PHPStan analyzes `src` and `tests` at level 4, with bootstrap configuration
 from `phpstan-bootstrap.php`. If you add package directories, update the
