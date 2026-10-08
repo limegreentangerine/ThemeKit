@@ -2,7 +2,6 @@
 	"name": "theme_kit",
 	"version": "1.0.0",
 	"description": "",
-	"main": "index.js",
 	"directories": {
 		"test": "tests"
 	},
@@ -22,15 +21,6 @@
 	},
 	"homepage": "https://github.com/limegreentangerine/theme_kit#readme",
 	"devDependencies": {
-		"@types/bootstrap": "^5.2.11",
-		"@types/node": "^26.6.4",
-		"prettier": "^3.9.6",
-		"sass": "^1.105.1",
-		"typescript": "^7.0.2",
-		"vite": "^8.3.4"
-	},
-	"dependencies": {
-		"@popperjs/core": "^2.11.8",
-		"bootstrap": "^5.3.8"
+		"prettier": "^3.9.6"
 	}
 }
