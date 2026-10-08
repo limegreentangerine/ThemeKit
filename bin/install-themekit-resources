@@ -12,6 +12,7 @@ $projectRoot = getcwd();
 
 $commands = [
     ['npm', 'install'],
+    ['npm', 'install', '--save-dev', 'webpack@5.98.0'], // bug fix for default mix in concrete builder
     ['npm', 'install', '--save-dev', 'vite', 'sass', 'typescript', '@types/node', '@types/bootstrap'],
     ['npm', 'install', '--save', 'bootstrap', '@popperjs/core'],
     ['npm', 'run', 'dev']
