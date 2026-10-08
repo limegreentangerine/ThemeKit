@@ -47,8 +47,34 @@ if (!is_dir($stylesDestinationFolder . 'utils')) {
     mkdir($stylesDestinationFolder . 'utils');
 }
 
+$styleFolders = [
+    'core',
+    'blocks',
+    'elements',
+    'templates'
+];
+
+foreach ($styleFolders as $folder) {
+    if (!is_dir($stylesDestinationFolder . $folder)) {
+        mkdir($stylesDestinationFolder . $folder);
+    }
+}
+
 if (!is_dir($scriptsDestinationFolder . 'utils')) {
     mkdir($scriptsDestinationFolder . 'utils');
+}
+
+$scriptsFolders = [
+    'core',
+    'blocks',
+    'elements',
+    'templates'
+];
+
+foreach ($scriptsFolders as $folder) {
+    if (!is_dir($scriptsDestinationFolder . $folder)) {
+        mkdir($scriptsDestinationFolder . $folder);
+    }
 }
 
 foreach (new DirectoryIterator($stylesFolder) as $file) {
