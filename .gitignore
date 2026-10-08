@@ -43,3 +43,6 @@ coverage/
 # node
 node_modules/
 node_modules
+
+src/js
+src/scss
