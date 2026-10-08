@@ -1,5 +1,5 @@
 <?php
-namespace Concrete\Package\ThemePackage\Theme\NewTheme; // Change NewTheme to the CamelCase of the theme folder name (I think)
+namespace Concrete\Package\ThemePackage\Theme\NewTheme; // Change NewTheme to the CamelCase of the theme folder name
 
 use Concrete\Core\Page\Theme\Theme;
 use Concrete\Core\Feature\Features;

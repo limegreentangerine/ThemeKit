@@ -10,11 +10,9 @@ if (!isset($_composer_autoload_path)) {
 
 $projectRoot = getcwd();
 
+// TODO: 'webpack@5.98.0' bug fix for default mix in concrete builder needs checking on a new install
 $commands = [
-    ['npm', 'install'],
-    ['npm', 'install', '--save-dev', 'webpack@5.98.0'], // bug fix for default mix in concrete builder
-    ['npm', 'install', '--save-dev', '@types/node', '@types/bootstrap'],
-    ['npm', 'install', '--save', 'bootstrap', '@popperjs/core']
+    ['npm', 'install', '--save-dev', 'bootstrap', '@popperjs/core', '@types/node', '@types/bootstrap', 'webpack@5.98.0'],
 ];
 
 foreach ($commands as $command) {
@@ -36,17 +34,9 @@ foreach ($commands as $command) {
 }
 
 $packageDirectory = dirname(__DIR__);
-$stylesFolder = $packageDirectory . '/resources/styles';
-$scriptsFolder = $packageDirectory . '/resources/scripts';
-
 $projectRoot = dirname($_composer_autoload_path);
+$stylesFolder = $packageDirectory . '/resources/styles';
 $stylesDestinationFolder = $projectRoot . '/../resources/css/';
-$scriptsDestinationFolder = $projectRoot . '/../resources/js/';
-
-if (!is_dir($stylesDestinationFolder . 'utils')) {
-    mkdir($stylesDestinationFolder . 'utils');
-}
-
 $styleFolders = [
     'core',
     'blocks',
@@ -54,26 +44,13 @@ $styleFolders = [
     'templates'
 ];
 
+if (!is_dir($stylesDestinationFolder . 'utils')) {
+    mkdir($stylesDestinationFolder . 'utils');
+}
+
 foreach ($styleFolders as $folder) {
     if (!is_dir($stylesDestinationFolder . $folder)) {
         mkdir($stylesDestinationFolder . $folder);
-    }
-}
-
-if (!is_dir($scriptsDestinationFolder . 'utils')) {
-    mkdir($scriptsDestinationFolder . 'utils');
-}
-
-$scriptsFolders = [
-    'core',
-    'blocks',
-    'elements',
-    'templates'
-];
-
-foreach ($scriptsFolders as $folder) {
-    if (!is_dir($scriptsDestinationFolder . $folder)) {
-        mkdir($scriptsDestinationFolder . $folder);
     }
 }
 
@@ -89,6 +66,25 @@ foreach (new DirectoryIterator($stylesFolder) as $file) {
     }
 }
 
+$scriptsFolder = $packageDirectory . '/resources/scripts';
+$scriptsDestinationFolder = $projectRoot . '/../resources/js/';
+$scriptsFolders = [
+    'core',
+    'blocks',
+    'elements',
+    'templates'
+];
+
+if (!is_dir($scriptsDestinationFolder . 'utils')) {
+    mkdir($scriptsDestinationFolder . 'utils');
+}
+
+foreach ($scriptsFolders as $folder) {
+    if (!is_dir($scriptsDestinationFolder . $folder)) {
+        mkdir($scriptsDestinationFolder . $folder);
+    }
+}
+
 foreach (new DirectoryIterator($scriptsFolder) as $file) {
     if ($file->isFile()) {
         $sourceFile = $scriptsFolder . '/' . $file->getFilename();
@@ -98,6 +94,47 @@ foreach (new DirectoryIterator($scriptsFolder) as $file) {
             fwrite(STDERR, "Unable to copy: {$file->getFilename()}\n");
             exit(1);
         }
+    }
+}
+
+$skeletonFolder = $packageDirectory . '/resources/skeleton';
+$skeletonDestinationFolder = $projectRoot . '/../public/application/themes';
+
+do {
+    echo 'Theme folder name (inside ' . $skeletonDestinationFolder . '): ';
+    $themeFolderName = trim((string) fgets(STDIN));
+    $isValidName = preg_match('/^[A-Za-z0-9_-]+$/', $themeFolderName) === 1;
+    if (!$isValidName) {
+        echo "Use only letters, numbers, hyphens and underscores." . PHP_EOL;
+    }
+} while (!$isValidName);
+
+$skeletonDestinationFolder .= '/' . $themeFolderName;
+if (!is_dir($skeletonDestinationFolder) && !mkdir($skeletonDestinationFolder, 0755, true)) {
+    fwrite(STDERR, "Unable to create: {$skeletonDestinationFolder}\n");
+    exit(1);
+}
+
+$skeletonIterator = new RecursiveIteratorIterator(
+    new RecursiveDirectoryIterator($skeletonFolder, FilesystemIterator::SKIP_DOTS),
+    RecursiveIteratorIterator::SELF_FIRST
+);
+
+foreach ($skeletonIterator as $item) {
+    $relativePath = $skeletonIterator->getSubPathname();
+    $destination = $skeletonDestinationFolder . '/' . $relativePath;
+
+    if ($item->isDir()) {
+        if (!is_dir($destination) && !mkdir($destination, 0755, true)) {
+            fwrite(STDERR, "Unable to create: {$relativePath}\n");
+            exit(1);
+        }
+    } elseif (file_exists($item->getPathname())) {
+        echo "{$relativePath} exists -- (ignored)\n";
+        continue;
+    } elseif (!copy($item->getPathname(), $destination)) {
+        fwrite(STDERR, "Unable to copy: {$relativePath}\n");
+        exit(1);
     }
 }
 
