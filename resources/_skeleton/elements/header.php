@@ -1,47 +1,10 @@
 <?php defined('C5_EXECUTE') or die("Access Denied.");
-    use Concrete\Core\User\Group\GroupRepository;
-
     /**
      * @var Concrete\Core\Page\Page $c
      * @var Concrete\Core\View\View $view
      */
 
     $u = new \User();
-    $g = \Core::make(GroupRepository::class)->getGroupByName('Administrators');
-    $cp = new \Permissions($c);
-    $body_classes = [];
-
-    // add user body classes
-    if ($u->isRegistered()) {
-        $body_classes[] = 'user__logged-in';
-    }
-
-    // if user can see toolbar, they're an admin
-    if ($cp->canViewToolbar()) {
-        $body_classes[] = 'user__admin';
-        $body_classes[] = 'toolbar-in-view';
-    }
-
-    // add page type as a class
-    if (strlen($c->getPageTypeHandle()) > 0) {
-        $body_classes[] = sprintf('page-type__%s', $c->getPageTypeHandle());
-    }
-
-    // add page template or single page handle as a class
-    if (strlen($c->getPageTemplateHandle()) > 0) {
-        $body_classes[] = sprintf('page-template__%s', $c->getPageTemplateHandle());
-    } else {
-        $body_classes[] = sprintf('page-template__%s', $c->getCollectionHandle());
-    }
-
-    // is page in edit mode
-    if ($c->isEditMode()) {
-        $body_classes[] = 'page__edit-mode';
-    }
-
-    if (\Config::get('concrete.maintenance_mode') == true && !$u->isRegistered()) {
-        $body_classes[] = 'maintenance-mode';
-    }
 ?>
 
 <!DOCTYPE html>
@@ -60,8 +23,8 @@
 
     <link href="<?php echo \Core::make('autocache')->autocache($view->getThemePath() . '/css/site.css'); ?>" type="text/css" rel="stylesheet" />
 </head>
-<body class="<?php echo implode(' ', $body_classes); ?>">
-    <div class="<?php echo $c->getPageWrapperClass()?>">
+<body>
+    <div class="<?php echo $c->getPageWrapperClass(); ?><?php echo ($c->isEditMode()) ? ' page-edit-mode' : ''; ?><?php echo (\Config::get('concrete.maintenance_mode') == true && !$u->isRegistered()) ? ' maintenance-mode' : ''; ?>">
         <nav>
             <?php
                 $a = new \GlobalArea('Navigation');
