@@ -121,7 +121,7 @@ $skeletonIterator = new RecursiveIteratorIterator(
 );
 
 foreach ($skeletonIterator as $item) {
-    $relativePath = $skeletonIterator->getSubPathname();
+    $relativePath = substr($item->getPathname(), strlen($skeletonFolder) + 1);
     $destination = $skeletonDestinationFolder . '/' . $relativePath;
 
     if ($item->isDir()) {
