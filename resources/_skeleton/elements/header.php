@@ -58,7 +58,7 @@
         ]);
     ?>
 
-    <link href="<?php echo \Core::make('autocache')->autocache($view->getThemePath() . '/css/main.css'); ?>" type="text/css" rel="stylesheet" />
+    <link href="<?php echo \Core::make('autocache')->autocache($view->getThemePath() . '/css/site.css'); ?>" type="text/css" rel="stylesheet" />
 </head>
 <body class="<?php echo implode(' ', $body_classes); ?>">
     <div class="<?php echo $c->getPageWrapperClass()?>">

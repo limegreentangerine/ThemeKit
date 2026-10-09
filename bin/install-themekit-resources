@@ -8,11 +8,37 @@ if (!isset($_composer_autoload_path)) {
     exit(1);
 }
 
+do {
+    echo 'Theme handle: ';
+    $themeFolderName = trim((string) fgets(STDIN));
+    $isValidName = preg_match('/^[A-Za-z0-9_-]+$/', $themeFolderName) === 1;
+    if (!$isValidName) {
+        echo "Use only letters, numbers, hyphens and underscores." . PHP_EOL;
+    }
+} while (!$isValidName);
+
 $projectRoot = getcwd();
 
-// TODO: 'webpack@5.98.0' bug fix for default mix in concrete builder needs checking on a new install
+// install required npm packages
 $commands = [
-    ['npm', 'install', '--save-dev', 'bootstrap', '@popperjs/core', '@types/node', '@types/bootstrap', 'webpack@5.98.0'],
+    [
+        'npm',
+        'install',
+        '--save-dev',
+        'typescript',
+        'ts-loader',
+        '@types/node',
+        '@types/bootstrap',
+        'webpack@5.98.0' // TODO: 'webpack@5.98.0' bug fix for default mix in concrete builder needs checking on a new install
+    ],
+    [
+        'npm',
+        'install',
+        '--save',
+        'bootstrap',
+        '@popperjs/core',
+        'bootstrap-icons'
+    ]
 ];
 
 foreach ($commands as $command) {
@@ -35,90 +61,102 @@ foreach ($commands as $command) {
 
 $packageDirectory = dirname(__DIR__);
 $projectRoot = dirname($_composer_autoload_path);
-$stylesFolder = $packageDirectory . '/resources/styles';
-$stylesDestinationFolder = $projectRoot . '/../resources/css/';
-$styleFolders = [
-    'core',
-    'blocks',
-    'elements',
-    'templates'
-];
 
-if (!is_dir($stylesDestinationFolder . 'utils')) {
-    mkdir($stylesDestinationFolder . 'utils');
-}
-
-foreach ($styleFolders as $folder) {
-    if (!is_dir($stylesDestinationFolder . $folder)) {
-        mkdir($stylesDestinationFolder . $folder);
-    }
-}
-
-foreach (new DirectoryIterator($stylesFolder) as $file) {
+// move root files
+$rootResources = $packageDirectory . '/resources/root';
+foreach (new DirectoryIterator($rootResources) as $file) {
     if ($file->isFile()) {
-        $sourceFile = $stylesFolder . '/' . $file->getFilename();
-        $destinationFile = $stylesDestinationFolder . 'utils/' . $file->getFilename();
+        $sourceFile = $rootResources . '/' . $file->getFilename();
+        $destinationFile = $projectRoot . '/../' . $file->getFilename();
 
         if (!copy($sourceFile, $destinationFile)) {
-            fwrite(STDERR, "Unable to copy: {$file->getFilename()}\n");
-            exit(1);
+            fwrite(STDERR, "Unable to copy, please try manually: {$sourceFile}\n");
+            continue;
+        }
+
+        $contents = file_get_contents($destinationFile);
+
+        if (!$contents) {
+            fwrite(STDERR, "Unable to open file to rename theme folder reference, please try manually: {$destinationFile}\n");
+        } else {
+            $contents = str_replace('{{THEME_NAME}}', (string) $themeFolderName, $contents);
+
+            if (!file_put_contents($destinationFile, $contents)) {
+                fwrite(STDERR, "Unable to write updated file contents, please try manually: {$destinationFile}\n");
+            }
         }
     }
 }
 
-$scriptsFolder = $packageDirectory . '/resources/scripts';
-$scriptsDestinationFolder = $projectRoot . '/../resources/js/';
-$scriptsFolders = [
-    'core',
-    'blocks',
-    'elements',
-    'templates'
-];
-
-if (!is_dir($scriptsDestinationFolder . 'utils')) {
-    mkdir($scriptsDestinationFolder . 'utils');
-}
-
-foreach ($scriptsFolders as $folder) {
-    if (!is_dir($scriptsDestinationFolder . $folder)) {
-        mkdir($scriptsDestinationFolder . $folder);
-    }
-}
-
-foreach (new DirectoryIterator($scriptsFolder) as $file) {
-    if ($file->isFile()) {
-        $sourceFile = $scriptsFolder . '/' . $file->getFilename();
-        $destinationFile = $scriptsDestinationFolder . 'utils/' . $file->getFilename();
-
-        if (!copy($sourceFile, $destinationFile)) {
-            fwrite(STDERR, "Unable to copy: {$file->getFilename()}\n");
-            exit(1);
-        }
-    }
-}
-
-$skeletonFolder = $packageDirectory . '/resources/skeleton';
-$skeletonDestinationFolder = $projectRoot . '/../public/application/themes';
-
-do {
-    echo 'Theme folder name (inside ' . $skeletonDestinationFolder . '): ';
-    $themeFolderName = trim((string) fgets(STDIN));
-    $isValidName = preg_match('/^[A-Za-z0-9_-]+$/', $themeFolderName) === 1;
-    if (!$isValidName) {
-        echo "Use only letters, numbers, hyphens and underscores." . PHP_EOL;
-    }
-} while (!$isValidName);
-
-$skeletonDestinationFolder .= '/' . $themeFolderName;
-if (!is_dir($skeletonDestinationFolder) && !mkdir($skeletonDestinationFolder, 0755, true)) {
-    fwrite(STDERR, "Unable to create: {$skeletonDestinationFolder}\n");
+// create src root
+$srcRoot = $projectRoot . '/../src/themes/' . $themeFolderName;
+if (!is_dir($srcRoot) && !mkdir($srcRoot, 0755, true)) {
+    fwrite(STDERR, "Unable to create: {$srcRoot}\n");
     exit(1);
 }
 
+// define scss folder and iterator, then process
+$scssFolder = $packageDirectory . '/resources/scss';
+$scssIterator = new RecursiveIteratorIterator(
+    new RecursiveDirectoryIterator($scssFolder, FilesystemIterator::SKIP_DOTS),
+    RecursiveIteratorIterator::SELF_FIRST
+);
+
+foreach ($scssIterator as $item) {
+    $relativePath = substr($item->getPathname(), strlen($scssFolder) + 1);
+    $destination = $srcRoot . '/' . $relativePath;
+
+    if ($item->isDir()) {
+        if (!is_dir($destination) && !mkdir($destination, 0755, true)) {
+            fwrite(STDERR, "Unable to create: {$relativePath}\n");
+            exit(1);
+        }
+    } elseif (file_exists($item->getPathname())) {
+        echo "{$relativePath} exists -- (ignored)\n";
+        continue;
+    } elseif (!copy($item->getPathname(), $destination)) {
+        fwrite(STDERR, "Unable to copy: {$relativePath}\n");
+        exit(1);
+    }
+}
+
+// define ts folder and iterator, then process
+$tsFolder = $packageDirectory . '/resources/ts';
+$tsIterator = new RecursiveIteratorIterator(
+    new RecursiveDirectoryIterator($tsFolder, FilesystemIterator::SKIP_DOTS),
+    RecursiveIteratorIterator::SELF_FIRST
+);
+
+foreach ($tsIterator as $item) {
+    $relativePath = substr($item->getPathname(), strlen($tsFolder) + 1);
+    $destination = $srcRoot . '/' . $relativePath;
+
+    if ($item->isDir()) {
+        if (!is_dir($destination) && !mkdir($destination, 0755, true)) {
+            fwrite(STDERR, "Unable to create: {$relativePath}\n");
+            exit(1);
+        }
+    } elseif (file_exists($item->getPathname())) {
+        echo "{$relativePath} exists -- (ignored)\n";
+        continue;
+    } elseif (!copy($item->getPathname(), $destination)) {
+        fwrite(STDERR, "Unable to copy: {$relativePath}\n");
+        exit(1);
+    }
+}
+
+$skeletonFolder = $packageDirectory . '/resources/_skeleton';
 $skeletonIterator = new RecursiveIteratorIterator(
     new RecursiveDirectoryIterator($skeletonFolder, FilesystemIterator::SKIP_DOTS),
     RecursiveIteratorIterator::SELF_FIRST
 );
+
+// create skeleton destination folder
+$skeletonDestinationFolder = $projectRoot . '/../public/application/themes/' . $themeFolderName;
+if (!is_dir($skeletonDestinationFolder) && !mkdir($skeletonDestinationFolder, 0755, true)) {
+    fwrite(STDERR, "Unable to create: {$skeletonDestinationFolder}\n");
+    exit(1);
+}
 
 foreach ($skeletonIterator as $item) {
     $relativePath = substr($item->getPathname(), strlen($skeletonFolder) + 1);

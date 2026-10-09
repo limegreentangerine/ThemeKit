@@ -1,0 +1,19 @@
+{
+    "compilerOptions": {
+        "target": "ES2017",
+        "module": "ESNext",
+        "moduleResolution": "node",
+        "ignoreDeprecations": "6.0",
+        "strict": true,
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        "skipLibCheck": true,
+        "sourceMap": true
+    },
+    "include": [
+        "src/themes/{{THEME_NAME}}/ts/**/*.ts"
+    ],
+    "exclude": [
+        "node_modules"
+    ]
+}

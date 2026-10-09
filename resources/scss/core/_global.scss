@@ -1,0 +1,36 @@
+.lgt-credit {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+
+    &__prefix {
+        margin: 0;
+        font-size: rem(14);
+        line-height: 1;
+        text-transform: uppercase;
+        color: currentColor;
+    }
+
+    &__image {
+        width: auto;
+        height: rem(23);
+        margin-left: rem(8);
+
+        polygon,
+        rect,
+        path {
+            fill: currentColor;
+        }
+    }
+}
+
+.img {
+    &-responsive {
+        @extend .img-fluid;
+    }
+
+    &-full-width {
+        width: 100%;
+        height: auto;
+    }
+}

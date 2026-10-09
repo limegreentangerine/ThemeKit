@@ -1,5 +1,8 @@
 // scroll listener init
-var scrollObject = {};
+var scrollObject: ScrollObject = {
+    x: 0,
+    y: 0
+};
 
 const getScrollDistance = () => {
     scrollObject = {
@@ -17,3 +20,8 @@ window.addEventListener('load', () => {
     document.body.classList.add('loaded');
     getScrollDistance();
 });
+
+type ScrollObject = {
+    x: number;
+    y: number;
+}
