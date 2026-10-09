@@ -1,0 +1,63 @@
+#!/usr/bin/env php
+<?php
+
+declare(strict_types=1);
+
+if (!isset($_composer_autoload_path)) {
+    fwrite(STDERR, "This command must be run through Composer.\n");
+    exit(1);
+}
+
+do {
+    echo 'Theme handle: ';
+    $themeFolderName = trim((string) fgets(STDIN));
+    $isValidName = preg_match('/^[A-Za-z0-9_-]+$/', $themeFolderName) === 1;
+    if (!$isValidName) {
+        echo "Use only letters, numbers, hyphens and underscores." . PHP_EOL;
+    }
+} while (!$isValidName);
+
+$packageDirectory = dirname(__DIR__);
+$projectRoot = dirname($_composer_autoload_path);
+
+
+$frontendFolder = $packageDirectory . '/resources/_system';
+$frontendIterator = new RecursiveIteratorIterator(
+    new RecursiveDirectoryIterator($frontendFolder, FilesystemIterator::SKIP_DOTS),
+    RecursiveIteratorIterator::SELF_FIRST
+);
+
+$frontendDestinationFolder = $projectRoot . '/../public/application/views';
+if (!is_dir($frontendDestinationFolder) && !mkdir($frontendDestinationFolder, 0755, true)) {
+    fwrite(STDERR, "Unable to create: {$frontendDestinationFolder}\n");
+    exit(1);
+}
+
+foreach ($frontendIterator as $item) {
+    $relativePath = substr($item->getPathname(), strlen($frontendFolder) + 1);
+    $destination = $frontendDestinationFolder . '/' . $relativePath;
+
+    if ($item->isDir()) {
+        if (!is_dir($destination) && !mkdir($destination, 0755, true)) {
+            fwrite(STDERR, "Unable to create: {$relativePath}\n");
+            exit(1);
+        }
+    } elseif (file_exists($destination)) {
+        echo "{$relativePath} exists -- (ignored)\n";
+        continue;
+    } elseif (!copy($item->getPathname(), $destination)) {
+        fwrite(STDERR, "Unable to copy: {$relativePath}\n");
+        exit(1);
+    }
+}
+
+echo "System pages added to {$frontendDestinationFolder}\n";
+
+$paths = [
+    '/page_not_found' => $themeFolderName,
+    '/page_forbidden' => $themeFolderName,
+    '/frontend/maintenance_mode' => $themeFolderName
+];
+\Config::save('app.theme_paths', $paths);
+
+echo "System pages configured to theme {$themeFolderName}\n";
