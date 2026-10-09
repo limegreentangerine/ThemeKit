@@ -58,6 +58,33 @@ $paths = [
     '/page_forbidden' => $themeFolderName,
     '/frontend/maintenance_mode' => $themeFolderName
 ];
-\Config::save('app.theme_paths', $paths);
+
+$configDirectory = $projectRoot . '/../public/application/config/generated_overrides';
+if (!is_dir($configDirectory) && !mkdir($configDirectory, 0775, true)) {
+    fwrite(STDERR, "Unable to create config directory: {$configDirectory}\n");
+    exit(1);
+}
+
+$configFile = $configDirectory . '/app.php';
+$config = is_file($configFile) ? require $configFile : [];
+
+if (!is_array($config)) {
+    fwrite(STDERR, "Invalid config file: {$configFile}\n");
+    exit(1);
+}
+
+$currentThemePaths = $config['theme_paths'] ?? [];
+if (!is_array($currentThemePaths)) {
+    fwrite(STDERR, "Invalid app.theme_paths config in {$configFile}\n");
+    exit(1);
+}
+
+$config['theme_paths'] = array_replace($currentThemePaths, $paths);
+$configContents = "<?php\n\nreturn " . var_export($config, true) . ";\n";
+
+if (file_put_contents($configFile, $configContents, LOCK_EX) === false) {
+    fwrite(STDERR, "Unable to write config file: {$configFile}\n");
+    exit(1);
+}
 
 echo "System pages configured to theme {$themeFolderName}\n";
