@@ -59,9 +59,9 @@ $paths = [
     '/frontend/maintenance_mode' => $themeFolderName
 ];
 
-$configDirectory = $projectRoot . '/../public/application/config/generated_overrides';
-if (!is_dir($configDirectory) && !mkdir($configDirectory, 0775, true)) {
-    fwrite(STDERR, "Unable to create config directory: {$configDirectory}\n");
+$configDirectory = $projectRoot . '/../public/application/config';
+if (!is_dir($configDirectory)) {
+    fwrite(STDERR, "Config directory missing: {$configDirectory}\n");
     exit(1);
 }
 
