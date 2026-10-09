@@ -35,7 +35,7 @@ $commands = [
         'npm',
         'install',
         '--save',
-        'bootstrap',
+        'bootstrap:^5.0.0',
         '@popperjs/core',
         'bootstrap-icons'
     ]
