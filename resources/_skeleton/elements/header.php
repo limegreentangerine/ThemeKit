@@ -24,7 +24,7 @@
     <link href="<?php echo \Core::make('autocache')->autocache($view->getThemePath() . '/css/site.css'); ?>" type="text/css" rel="stylesheet" />
 </head>
 <body>
-    <div class="<?php echo $c->getPageWrapperClass(); ?><?php echo ($c->isEditMode()) ? ' page-edit-mode' : ''; ?><?php echo (\Config::get('concrete.maintenance_mode') == true && !$u->isRegistered()) ? ' maintenance-mode' : ''; ?>">
+    <div class="<?php echo $c->getPageWrapperClass(); ?><?php echo ($c->isEditMode()) ? ' ccm-page-edit-mode' : ''; ?>">
         <nav>
             <?php
                 $a = new \GlobalArea('Navigation');
