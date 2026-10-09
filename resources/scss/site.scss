@@ -46,7 +46,7 @@
 @import "bootstrap/scss/placeholders";
 
 // Bootstrap Icons
-$bootstrap-icons-font-dir: "bootstrap-icons/font/fonts";
+$bootstrap-icons-font-dir: "./application/themes/{{THEME_NAME}}/fonts";
 @import "bootstrap-icons/font/bootstrap-icons";
 
 // Helpers

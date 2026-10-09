@@ -20,6 +20,9 @@
 			"email": "mail@leejones.me.uk"
 		}
 	],
+	"require": {
+		"limegreentangerine/lgt_toolkit": "^0.0.11"
+	},
 	"require-dev": {
 		"php": "^8.4",
 		"phpunit/phpunit": "^11",

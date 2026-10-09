@@ -104,19 +104,33 @@ $scssIterator = new RecursiveIteratorIterator(
 
 foreach ($scssIterator as $item) {
     $relativePath = substr($item->getPathname(), strlen($scssFolder) + 1);
-    $destination = $srcRoot . '/' . $relativePath;
+    $destination = $srcRoot . '/scss/' . $relativePath;
 
     if ($item->isDir()) {
         if (!is_dir($destination) && !mkdir($destination, 0755, true)) {
             fwrite(STDERR, "Unable to create: {$relativePath}\n");
             exit(1);
         }
-    } elseif (file_exists($item->getPathname())) {
+    } elseif (file_exists($destination)) {
         echo "{$relativePath} exists -- (ignored)\n";
         continue;
     } elseif (!copy($item->getPathname(), $destination)) {
         fwrite(STDERR, "Unable to copy: {$relativePath}\n");
         exit(1);
+    }
+
+    if ($item->getFilename() === 'site.scss') {
+        $contents = file_get_contents($destination);
+
+        if (!$contents) {
+            fwrite(STDERR, "Unable to open file to rename theme folder reference, please try manually: {$destination}\n");
+        } else {
+            $contents = str_replace('{{THEME_NAME}}', (string) $themeFolderName, $contents);
+
+            if (!file_put_contents($destination, $contents)) {
+                fwrite(STDERR, "Unable to write updated file contents, please try manually: {$destination}\n");
+            }
+        }
     }
 }
 
@@ -129,14 +143,14 @@ $tsIterator = new RecursiveIteratorIterator(
 
 foreach ($tsIterator as $item) {
     $relativePath = substr($item->getPathname(), strlen($tsFolder) + 1);
-    $destination = $srcRoot . '/' . $relativePath;
+    $destination = $srcRoot . '/ts/' . $relativePath;
 
     if ($item->isDir()) {
         if (!is_dir($destination) && !mkdir($destination, 0755, true)) {
             fwrite(STDERR, "Unable to create: {$relativePath}\n");
             exit(1);
         }
-    } elseif (file_exists($item->getPathname())) {
+    } elseif (file_exists($destination)) {
         echo "{$relativePath} exists -- (ignored)\n";
         continue;
     } elseif (!copy($item->getPathname(), $destination)) {
@@ -167,12 +181,28 @@ foreach ($skeletonIterator as $item) {
             fwrite(STDERR, "Unable to create: {$relativePath}\n");
             exit(1);
         }
-    } elseif (file_exists($item->getPathname())) {
+    } elseif (file_exists($destination)) {
         echo "{$relativePath} exists -- (ignored)\n";
         continue;
     } elseif (!copy($item->getPathname(), $destination)) {
         fwrite(STDERR, "Unable to copy: {$relativePath}\n");
         exit(1);
+    }
+}
+
+$pageThemePath = $skeletonDestinationFolder = $projectRoot . '/../public/application/themes/' . $themeFolderName . '/page_theme.php';
+if (file_exists($pageThemePath)) {
+    $classNameString = str_replace(' ', '', ucwords(str_replace(['_', '-'], ' ', $themeFolderName)));
+
+    $contents = file_get_contents($pageThemePath);
+    if (!$contents) {
+        fwrite(STDERR, "Unable to open file to rename theme class reference, please try manually: {$pageThemePath}\n");
+    } else {
+        $contents = str_replace('{{THEME_CLASS}}', (string) $classNameString, $contents);
+
+        if (!file_put_contents($pageThemePath, $contents)) {
+            fwrite(STDERR, "Unable to write updated file contents, please try manually: {$pageThemePath}\n");
+        }
     }
 }
 
