@@ -5,6 +5,7 @@
      */
 
     $u = new \User();
+    $mm = \Config::get('concrete.maintenance_mode');
 ?>
 
 <!DOCTYPE html>
@@ -24,7 +25,7 @@
     <link href="<?php echo \Core::make('autocache')->autocache($view->getThemePath() . '/css/site.css'); ?>" type="text/css" rel="stylesheet" />
 </head>
 <body>
-    <div class="<?php echo $c->getPageWrapperClass(); ?><?php echo ($c->isEditMode()) ? ' ccm-page-edit-mode' : ''; ?>">
+    <div class="<?php echo $c->getPageWrapperClass(); ?><?php echo ($c->isEditMode()) ? ' ccm-page-edit-mode' : ''; ?><?php echo ($c->getCollectionHandle() === 'page_not_found' || $c->getCollectionHandle() === 'page_forbidden') ? ' ccm-' . str_replace('_', '-', $c->getCollectionHandle()) : ''; ?><?php echo ($mm) ? ' ccm-maintenance-mode' : ''; ?>">
         <nav>
             <?php
                 $a = new \GlobalArea('Navigation');

@@ -14,6 +14,8 @@ setup.
 - Root-level `webpack.mix.js` and `tsconfig.json` starter configuration.
 - An installer command that creates the theme directories, copies starter
   resources, and installs the npm dependencies used by the scaffold.
+- A system-pages installer that copies the provided system page views and
+  configures them to use the selected theme.
 
 ## Requirements
 
@@ -60,6 +62,21 @@ After installation, update the generated `PageTheme` name and description,
 edit the templates and theme styles, and configure the frontend build for your
 project. The copied webpack configuration is a starting point; adjust its
 entry points and output paths to match your application.
+
+## Install system pages
+
+From the project root, run the system-pages installer:
+
+```bash
+./vendor/bin/install-system-pages
+```
+
+When prompted, enter the theme handle to use, using only letters, numbers,
+hyphens, or underscores. The command copies the provided system page views to
+`public/application/views`, leaving existing files in place. It then updates
+`public/application/config/generated_overrides/app.php` so `/page_not_found`,
+`/page_forbidden`, and `/frontend/maintenance_mode` use that theme. Other
+configuration values and theme path entries are preserved.
 
 ## Development
 
