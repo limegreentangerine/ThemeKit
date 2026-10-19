@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "9cb4229dfbb87604954e3304f476cfff",
+    "content-hash": "ee7c8f065a78b8cde0fda9c0a3691c69",
     "packages": [
         {
             "name": "limegreentangerine/class_kit",
-            "version": "1.0.9",
+            "version": "2.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/limegreentangerine/ClassKit.git",
-                "reference": "0cac24fe4ee1c08c7280a6524e55a810c7d339b4"
+                "reference": "619e28e9341595d87e7c090e7e794a9b3bfa618a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/limegreentangerine/ClassKit/zipball/0cac24fe4ee1c08c7280a6524e55a810c7d339b4",
-                "reference": "0cac24fe4ee1c08c7280a6524e55a810c7d339b4",
+                "url": "https://api.github.com/repos/limegreentangerine/ClassKit/zipball/619e28e9341595d87e7c090e7e794a9b3bfa618a",
+                "reference": "619e28e9341595d87e7c090e7e794a9b3bfa618a",
                 "shasum": ""
             },
             "require-dev": {
@@ -26,6 +26,9 @@
                 "php": "^8.4",
                 "phpunit/phpunit": "^11"
             },
+            "bin": [
+                "bin/create-svelte-component"
+            ],
             "type": "concrete5-package",
             "autoload": {
                 "psr-4": {
@@ -49,26 +52,26 @@
             "description": "Collection of helper classes for LGT packages.",
             "support": {
                 "issues": "https://github.com/limegreentangerine/ClassKit/issues",
-                "source": "https://github.com/limegreentangerine/ClassKit/tree/1.0.9"
+                "source": "https://github.com/limegreentangerine/ClassKit/tree/2.0.1"
             },
-            "time": "2026-10-07T09:13:24+00:00"
+            "time": "2026-10-19T13:31:39+00:00"
         },
         {
             "name": "limegreentangerine/lgt_toolkit",
-            "version": "0.0.11",
+            "version": "1.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/limegreentangerine/LGTToolkit.git",
-                "reference": "7d6bb203150744e99ad8c08ce8bb226cfb251417"
+                "reference": "167473e7d8cab71f19dd83a85aedfaae87cb7531"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/limegreentangerine/LGTToolkit/zipball/7d6bb203150744e99ad8c08ce8bb226cfb251417",
-                "reference": "7d6bb203150744e99ad8c08ce8bb226cfb251417",
+                "url": "https://api.github.com/repos/limegreentangerine/LGTToolkit/zipball/167473e7d8cab71f19dd83a85aedfaae87cb7531",
+                "reference": "167473e7d8cab71f19dd83a85aedfaae87cb7531",
                 "shasum": ""
             },
             "require": {
-                "limegreentangerine/class_kit": "^1.0",
+                "limegreentangerine/class_kit": "^2.0",
                 "php-debugbar/php-debugbar": "^3.8"
             },
             "require-dev": {
@@ -104,9 +107,9 @@
             "description": "LGT tools and defaults for Concrete CMS",
             "support": {
                 "issues": "https://github.com/limegreentangerine/LGTToolkit/issues",
-                "source": "https://github.com/limegreentangerine/LGTToolkit/tree/0.0.11"
+                "source": "https://github.com/limegreentangerine/LGTToolkit/tree/1.0.0"
             },
-            "time": "2026-10-09T08:58:21+00:00"
+            "time": "2026-10-19T13:34:13+00:00"
         },
         {
             "name": "php-debugbar/php-debugbar",
@@ -329,16 +332,16 @@
         },
         {
             "name": "symfony/polyfill-mbstring",
-            "version": "v1.38.2",
+            "version": "v1.43.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "d3d318bad5e7a1bfbd026009c8bfb8d8f99ae6b6"
+                "reference": "4d5d331bf731e0aedbc6b2f5e61135b7b7996a72"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/d3d318bad5e7a1bfbd026009c8bfb8d8f99ae6b6",
-                "reference": "d3d318bad5e7a1bfbd026009c8bfb8d8f99ae6b6",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/4d5d331bf731e0aedbc6b2f5e61135b7b7996a72",
+                "reference": "4d5d331bf731e0aedbc6b2f5e61135b7b7996a72",
                 "shasum": ""
             },
             "require": {
@@ -390,7 +393,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.38.2"
+                "source": "https://github.com/symfony/polyfill-mbstring/tree/v1.43.0"
             },
             "funding": [
                 {
@@ -410,20 +413,20 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-05-27T06:59:30+00:00"
+            "time": "2026-09-24T15:19:04+00:00"
         },
         {
             "name": "symfony/var-dumper",
-            "version": "v6.4.45",
+            "version": "v6.4.48",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/var-dumper.git",
-                "reference": "86a9b2f1bd81c9780a809632238ab6ba10292166"
+                "reference": "7db9224bcf74d1306d2062cb8b124fbe0efeb714"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/86a9b2f1bd81c9780a809632238ab6ba10292166",
-                "reference": "86a9b2f1bd81c9780a809632238ab6ba10292166",
+                "url": "https://api.github.com/repos/symfony/var-dumper/zipball/7db9224bcf74d1306d2062cb8b124fbe0efeb714",
+                "reference": "7db9224bcf74d1306d2062cb8b124fbe0efeb714",
                 "shasum": ""
             },
             "require": {
@@ -478,7 +481,7 @@
                 "dump"
             ],
             "support": {
-                "source": "https://github.com/symfony/var-dumper/tree/v6.4.45"
+                "source": "https://github.com/symfony/var-dumper/tree/v6.4.48"
             },
             "funding": [
                 {
@@ -498,7 +501,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-08-30T20:10:39+00:00"
+            "time": "2026-10-13T05:38:27+00:00"
         }
     ],
     "packages-dev": [
@@ -12770,16 +12773,16 @@
         },
         {
             "name": "symfony/polyfill-php80",
-            "version": "v1.37.0",
+            "version": "v1.43.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/polyfill-php80.git",
-                "reference": "dfb55726c3a76ea3b6459fcfda1ec2d80a682411"
+                "reference": "9c6a5d6b01ca51d486c813e9a9c0ed55f208bb74"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-php80/zipball/dfb55726c3a76ea3b6459fcfda1ec2d80a682411",
-                "reference": "dfb55726c3a76ea3b6459fcfda1ec2d80a682411",
+                "url": "https://api.github.com/repos/symfony/polyfill-php80/zipball/9c6a5d6b01ca51d486c813e9a9c0ed55f208bb74",
+                "reference": "9c6a5d6b01ca51d486c813e9a9c0ed55f208bb74",
                 "shasum": ""
             },
             "require": {
@@ -12830,7 +12833,7 @@
                 "shim"
             ],
             "support": {
-                "source": "https://github.com/symfony/polyfill-php80/tree/v1.37.0"
+                "source": "https://github.com/symfony/polyfill-php80/tree/v1.43.0"
             },
             "funding": [
                 {
@@ -12850,7 +12853,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2026-04-10T16:19:22+00:00"
+            "time": "2026-09-25T15:50:05+00:00"
         },
         {
             "name": "symfony/polyfill-php81",
