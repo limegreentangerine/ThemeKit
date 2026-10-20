@@ -50,12 +50,10 @@
 		"format:check": [
 			"@format:php:check",
 			"@format:js:check"
-		],
-		"post-install-cmd": [
-			"npm install"
 		]
 	},
 	"bin": [
+		"bin/create-new-theme",
 		"bin/install-system-pages"
 	]
 }
