@@ -21,6 +21,24 @@ do {
     }
 } while (!$isValidName);
 
+do {
+    echo 'Theme name: ';
+    $themeName = trim((string) fgets(STDIN));
+    $isValidName = $themeName !== '';
+    if (!$isValidName) {
+        echo "Please enter a theme name." . PHP_EOL;
+    }
+} while (!$isValidName);
+
+do {
+    echo 'Theme description: ';
+    $themeDescription = trim((string) fgets(STDIN));
+    $isValidName = $themeDescription !== '';
+    if (!$isValidName) {
+        echo "Please enter a theme description." . PHP_EOL;
+    }
+} while (!$isValidName);
+
 // install required npm packages
 $commands = [
     [
@@ -212,6 +230,8 @@ if (file_exists($pageThemePath)) {
         fwrite(STDERR, "Unable to open file to rename theme class reference, please try manually: {$pageThemePath}\n");
     } else {
         $contents = str_replace('{{THEME_CLASS}}', (string) $classNameString, $contents);
+        $contents = str_replace('{{THEME_NAME}}', (string) $themeName, $contents);
+        $contents = str_replace('{{THEME_DESCRIPTION}}', (string) $themeDescription, $contents);
 
         if (!file_put_contents($pageThemePath, $contents)) {
             fwrite(STDERR, "Unable to write updated file contents, please try manually: {$pageThemePath}\n");

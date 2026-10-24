@@ -15,7 +15,7 @@ class PageTheme extends Theme
      */
     public function getThemeName()
     {
-        return t('New Theme');
+        return t({{THEME_NAME}});
     }
 
     /**
@@ -27,7 +27,7 @@ class PageTheme extends Theme
      */
     public function getThemeDescription()
     {
-        return t('New Theme For Site');
+        return t({{THEME_DESCRIPTION}});
     }
 
     /**
