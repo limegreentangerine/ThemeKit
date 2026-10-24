@@ -85,30 +85,6 @@ foreach ($commands as $command) {
 echo "Creating folders for src files..." . PHP_EOL;
 
 $resourceRoot = $projectRoot . DIRECTORY_SEPARATOR . 'vendor/limegreentangerine/theme_kit';
-$rootResources = $resourceRoot . '/resources/root';
-foreach (new DirectoryIterator($rootResources) as $file) {
-    if ($file->isFile()) {
-        $sourceFile = $rootResources . '/' . $file->getFilename();
-        $destinationFile = $projectRoot . '/../' . $file->getFilename();
-
-        if (!copy($sourceFile, $destinationFile)) {
-            fwrite(STDERR, "Unable to copy, please try manually: {$sourceFile}\n");
-            continue;
-        }
-
-        $contents = file_get_contents($destinationFile);
-
-        if (!$contents) {
-            fwrite(STDERR, "Unable to open file to rename theme folder reference, please try manually: {$destinationFile}\n");
-        } else {
-            $contents = str_replace('{{THEME_NAME}}', (string) $themeFolderName, $contents);
-
-            if (!file_put_contents($destinationFile, $contents)) {
-                fwrite(STDERR, "Unable to write updated file contents, please try manually: {$destinationFile}\n");
-            }
-        }
-    }
-}
 
 // create src root
 $srcRoot = $projectRoot . '/src/themes/' . $themeFolderName;
