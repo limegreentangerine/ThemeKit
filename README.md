@@ -80,13 +80,13 @@ composer install
 
 Useful project commands:
 
-| Command                  | Purpose                                  |
-| ------------------------ | ---------------------------------------- |
-| `composer test`          | Run PHPUnit tests.                       |
-| `composer test-coverage` | Run PHPUnit and print a coverage report. |
-| `composer typecheck`     | Run PHPStan analysis.                    |
+| Command                  | Purpose                                                              |
+| ------------------------ | -------------------------------------------------------------------- |
+| `composer test`          | Run PHPUnit tests.                                                   |
+| `composer test-coverage` | Run PHPUnit and print a coverage report.                             |
+| `composer typecheck`     | Run PHPStan analysis.                                                |
 | `composer format:check`  | Check PHP formatting with PHP-CS-Fixer and formatting with Prettier. |
-| `composer format`        | Format PHP files with PHP-CS-Fixer and files supported by Prettier. |
+| `composer format`        | Format PHP files with PHP-CS-Fixer and files supported by Prettier.  |
 
 See [CHANGELOG.md](./CHANGELOG.md) for the project history and
 [LICENSE.TXT](./LICENSE.TXT) for licensing information.
