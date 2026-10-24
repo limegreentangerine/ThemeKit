@@ -9,9 +9,8 @@ setup.
 
 - A Concrete CMS theme skeleton with page templates, shared header and footer
   elements, navigation, and a starter `PageTheme` class.
-- Organized Sass and TypeScript starter files for theme, block, element, and
+- Organized SCSS and TypeScript starter files for theme, block, element, and
   template code.
-- Root-level `webpack.mix.js` and `tsconfig.json` starter configuration.
 - An installer command that creates the theme directories, copies starter
   resources, and installs the npm dependencies used by the scaffold.
 - A system-pages installer that copies the provided system page views and
@@ -22,10 +21,10 @@ setup.
 - A Composer-managed Concrete CMS project.
 - PHP and Composer.
 - Node.js and npm, for the installer and frontend dependencies.
-- Access to the Composer registry hosting `limegreentangerine/lgt_toolkit`,
-  which ThemeKit requires.
+- Composer must be able to install the required
+  `limegreentangerine/lgt_toolkit` package.
 
-The package's development configuration uses Concrete CMS 9.2 and PHP 8.4.
+The package's development dependencies use Concrete CMS 9.2 and PHP 8.4.
 
 ## Install
 
@@ -37,35 +36,28 @@ composer require limegreentangerine/theme_kit
 
 ## Create a theme
 
-From the project root directory where you want npm dependencies installed, run:
+From your Concrete CMS project root, run:
 
 ```bash
-./vendor/bin/install-themekit-resources
+./vendor/bin/create-new-theme
 ```
 
 When prompted, enter a theme handle using only letters, numbers, hyphens, or
-underscores. For example, `my_theme` creates a `MyTheme` PHP theme class.
+underscores, followed by the theme name and description. For example,
+`my_theme` creates a `MyTheme` PHP theme class.
 
-The command installs TypeScript, webpack tooling, Bootstrap, Popper, and
-Bootstrap Icons with npm, then copies the theme skeleton and source resources.
-It creates the theme's PHP files under `public/application/themes/<handle>` and
-its Sass and TypeScript sources under `src/themes/<handle>`. It also copies
-`webpack.mix.js` and `tsconfig.json` to the directory above the Composer
-project root.
+The command installs TypeScript, `ts-loader`, `@types/node`, and
+`@types/bootstrap` as npm development dependencies, and Bootstrap 5, Popper,
+and Bootstrap Icons as npm dependencies. It is intended to copy the theme's
+PHP files to `public/application/themes/<handle>` and its SCSS and TypeScript
+sources to `src/themes/<handle>`, leaving existing files in place.
 
-Existing files in the theme's Sass, TypeScript, and public theme directories
-are left in place rather than replaced. The root configuration files are copied
-to their destination and may overwrite files with the same names, so back up
-custom configurations before running the installer.
-
-After installation, update the generated `PageTheme` name and description,
-edit the templates and theme styles, and configure the frontend build for your
-project. The copied webpack configuration is a starting point; adjust its
-entry points and output paths to match your application.
+Once the installer is able to complete, edit the theme templates and styles,
+and configure a frontend build that suits your project.
 
 ## Install system pages
 
-From the project root, run the system-pages installer:
+From your Concrete CMS project root, run the system-pages installer:
 
 ```bash
 ./vendor/bin/install-system-pages
@@ -74,9 +66,9 @@ From the project root, run the system-pages installer:
 When prompted, enter the theme handle to use, using only letters, numbers,
 hyphens, or underscores. The command copies the provided system page views to
 `public/application/views`, leaving existing files in place. It then updates
-`public/application/config/generated_overrides/app.php` so `/page_not_found`,
+`public/application/config/app.php` so `/page_not_found`,
 `/page_forbidden`, and `/frontend/maintenance_mode` use that theme. Other
-configuration values and theme path entries are preserved.
+configuration values and other theme path entries are preserved.
 
 ## Development
 
@@ -93,8 +85,8 @@ Useful project commands:
 | `composer test`          | Run PHPUnit tests.                       |
 | `composer test-coverage` | Run PHPUnit and print a coverage report. |
 | `composer typecheck`     | Run PHPStan analysis.                    |
-| `composer format:check`  | Check PHP and JavaScript formatting.     |
-| `composer format`        | Format PHP and JavaScript files.         |
+| `composer format:check`  | Check PHP formatting with PHP-CS-Fixer and formatting with Prettier. |
+| `composer format`        | Format PHP files with PHP-CS-Fixer and files supported by Prettier. |
 
 See [CHANGELOG.md](./CHANGELOG.md) for the project history and
 [LICENSE.TXT](./LICENSE.TXT) for licensing information.
