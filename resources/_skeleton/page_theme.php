@@ -83,7 +83,7 @@ class PageTheme extends Theme
      */
     public function registerAssets()
     {
-        $this->requireAsset('jquery');
+        // $this->requireAsset('jquery');
     }
 
     /**
